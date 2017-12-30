@@ -8,4 +8,4 @@ The processing workflow is simple. First I prepare the dataset in the file prepa
 
 I followed the instructions from the original post and to obtain the DAE I only changed the optimizer from SGD to RMSprop to get a quicker convergence.
 
-To obtain the final result, if I use the original network setup (4500-1000-1000), the loss doesn't converge, it stalls at 0.6 approximately. The original setup is in the file keras_final_dae.py. I reduced the network to (450-100-100) in the file keras_final_dae_small.py, I got better results, but still a very bad result.
+I'm now running the current commit to test the accuracy, as the previous didn't worked well. In the latest commit I changed the noise generation to occur before the OHE, as the adding noise to sparse OHE columns didn't work.

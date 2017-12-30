@@ -20,24 +20,9 @@ from numba import jit
 # from keras.optimizers import RMSprop
 import operator
 from sklearn.metrics import roc_auc_score
-import pickle
-from hyperopt.pyll.base import scope 
 import tensorflow as tf
-import os
-import socket
-import gc
-from scipy.stats import hmean
 import tensorflow as tf
 
-host = socket.gethostname()
-
-filename = "keras_params_new.txt".format(host)
-
-iter = 1
-
-# Hyperparameters tuning
-
-#trials = MongoTrials('mongo://34.200.213.137:27017/hyperopt/jobs', exp_key='ensemble')
 
 train_data = np.load('train_data_dae.npy')
 

@@ -26,12 +26,24 @@ import tensorflow as tf
 
 filename = "keras_dae.txt"
 
+def upsample_index(target, times):
+    n = target.shape[0]
+    train_index = np.array(list(range(n)))
+    positive_index = train_index[target == 1]
+    upsampled_index = train_index.tolist() + positive_index.tolist() * times
+    np.random.shuffle(upsampled_index)
+    return np.array(upsampled_index)
+
+def upsample_data(train, target, times):
+    upsampled_index = upsample_index(target, times)
+    return train[upsampled_index], target[upsampled_index]
+
 
 def inputSwapNoise(arr, p):
     ### Takes a numpy array and swaps a row of each 
     ### feature with another value from the same column with probability p
     n, m = arr.shape
-    idx = range(n)
+    idx = list(range(n))
     swap_n = round(n*p)
     for i in range(m):
         col_vals = np.random.permutation(arr[:, i])
@@ -47,18 +59,18 @@ test_data_orig = np.load('test_data.npy')
 
 train_target = np.load('train_target.npy')
 
-ntrain = train_data_orig.shape[0]
+print('Original train data with {} samples'.format(train_data_orig.shape[0]))
+print('Original test data with {} samples'.format(test_data_orig.shape[0]))
 
 all_data = np.vstack((train_data_orig, test_data_orig))
 
-all_data_error = np.zeros((all_data.shape))
-
 print('Adding noise')
 
-all_data_error = inputSwapNoise(all_data, 0.15)
+train_data_noise = np.load('train_data_noise.npy')
 
-ntrain = train_data_orig.shape[0]
-ntest  = test_data_orig.shape[0]
+test_data_noise = np.load('test_data_noise.npy')
+
+all_data_noise = np.vstack((train_data_noise, test_data_noise))
 
 print('Creating neural net')
 
@@ -90,18 +102,16 @@ chck = ModelCheckpoint('keras_dae.h5', monitor='loss', save_best_only=True)
 
 cb = [ EarlyStopping(monitor='loss',patience=20, verbose=2, min_delta=0), chck ]
             
-model.fit(all_data_error, all_data, batch_size=128, verbose=1, epochs=epochs, callbacks=cb)
+model.fit(all_data_noise, all_data, batch_size=128, verbose=1, epochs=epochs, callbacks=cb)
 
 model = load_model('keras_dae.h5')
 
 print('Applying neural net')
 
-all_data_transform = model.predict(all_data)
+train_data_transform = model.predict(train_data_orig)
+test_data_transform = model.predict(test_data_orig)
 
 print('Saving results')
-
-train_data_transform = all_data_transform[0:ntrain,:]
-test_data_transform = all_data_transform[ntrain:,:]
 
 np.save('train_data_dae.npy', train_data_transform)
 np.save('test_data_dae.npy', test_data_transform)
