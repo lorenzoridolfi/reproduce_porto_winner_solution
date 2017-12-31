@@ -8,6 +8,11 @@ The processing workflow is simple. First I prepare the dataset in the file prepa
 
 I followed the instructions from the original post and to obtain the DAE I only changed the optimizer from SGD to Adam to get a quicker convergence.
 
+ASSUMPTION MADE:
+
+- I'm adding noise before the OHE. I believe shuffling the sparse OHE columns has a very low effect in adding noise.
+- I'm considering a column to be a binary column if the column has 3 or less different elements, as the column may have missing values. Only non-binary columns are normalized by rank-gauss.
+
 UPDATE:
 
 Doing some manual parameter adjustment I got a partial gini score of 0.29 in a CV. Now I'm running a hyperopt parameter search to adjust lr, l2 reg and dropout. As the winner used C++ and a different NN library, I believe it's normal to have to adjust the parameters. 
