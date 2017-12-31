@@ -262,8 +262,6 @@ def score(params):
     # df1['target'] = np.mean(test_all,axis=1)
     # df1[['id','target']].to_csv(filename_save, index=False, float_format='%.5f')
 
-    iter += 1
-
     return {'loss': 1.0 - score_final, 'status': STATUS_OK}
 
 
