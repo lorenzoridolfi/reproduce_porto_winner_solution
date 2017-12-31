@@ -6,7 +6,7 @@ The code is available at https://github.com/lorenzoridolfi/reproduce_porto_winne
 
 The processing workflow is simple. First I prepare the dataset in the file prepare_data.py. After that, I prepare the noise dataset using prepare_data_noise.py. The next step is to process the DAE, done in the file keras_dae.py. Finally, I generate the final result in the keras_final_dae.py
 
-I followed the instructions from the original post and to obtain the DAE I only changed the optimizer from SGD to RMSprop to get a quicker convergence.
+I followed the instructions from the original post and to obtain the DAE I only changed the optimizer from SGD to Adam to get a quicker convergence.
 
 UPDATE:
 
