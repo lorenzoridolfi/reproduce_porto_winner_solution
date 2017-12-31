@@ -292,7 +292,7 @@ def optimize(random_state=99):
     space = {
             #'lr' : hp.loguniform('lr', np.log(0.05), np.log(0.0005)),
                 
-            'activation' : hp.choice('activation', 'linear', 'relu'),
+            'activation' : hp.choice('activation', ['linear', 'relu']),
             'dropout1': hp.uniform('dropout1', 0., 0.3),
             'dropout2': hp.uniform('dropout2', 0., 0.5),
 
