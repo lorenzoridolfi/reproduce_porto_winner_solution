@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.model_selection import StratifiedKFold, KFold
 import keras
 from keras import regularizers
+from keras import optimizers
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, MaxPooling2D
@@ -136,21 +137,24 @@ class RocAucMetricCallback(keras.callbacks.Callback):
             logs['roc_auc_val']= 2.0 * roc_auc_score(self.validation_data[1], self.model.predict(self.validation_data[0], batch_size=self.predict_batch_size)) - 1.0
 
 
-#, kernel_regularizer=regularizers.l2(0.05)
+#, kernel_regularizer=regularizers.l2(l2reg)
+
+l2reg = 5.0e-6
+lr = 0.002
 
 model = Sequential()
-model.add(Dense(units=4500, input_dim = train_data.shape[1], kernel_initializer=glorot_normal()))
-model.add(Activation('relu'))
+model.add(Dense(units=4500, input_dim = train_data.shape[1], kernel_initializer=glorot_normal(),kernel_regularizer=regularizers.l2(l2reg)))
+model.add(Activation('linear'))
 model.add(Dropout(0.1))
 model.add(BatchNormalization())
 
 
-model.add(Dense(units=1000, kernel_initializer=glorot_normal()))
+model.add(Dense(units=1000, kernel_initializer=glorot_normal(),kernel_regularizer=regularizers.l2(l2reg)))
 model.add(Activation('relu'))
 model.add(Dropout(0.5))
 model.add(BatchNormalization())
 
-model.add(Dense(units=1000, kernel_initializer=glorot_normal()))
+model.add(Dense(units=1000, kernel_initializer=glorot_normal(),kernel_regularizer=regularizers.l2(l2reg) ))
 model.add(Activation('relu'))
 model.add(Dropout(0.5))
 model.add(BatchNormalization())
@@ -158,7 +162,10 @@ model.add(BatchNormalization())
 model.add(Dense(1)) 
 model.add(Activation('sigmoid'))
 
-opt = keras.optimizers.RMSprop(lr=0.05, rho=0.9, epsilon=1e-08, decay=0.004)
+
+#opt = keras.optimizers.RMSprop(lr=0.002, rho=0.9, epsilon=1e-08, decay=3 / 150.0)
+#opt = optimizers.SGD(lr=0.01, decay=0.995, momentum=0.9)
+opt = keras.optimizers.Adam(lr=lr)
 
 model.compile(loss='binary_crossentropy', optimizer=opt)
 
@@ -168,8 +175,8 @@ result = np.zeros(ntrain)
 
 k = 5
 
-#skf = StratifiedKFold(n_splits=k, shuffle=True, random_state=7123)
-skf = KFold(n_splits=k, shuffle=True, random_state=34123)
+skf = StratifiedKFold(n_splits=k, shuffle=True, random_state=7123)
+#skf = KFold(n_splits=k, shuffle=True, random_state=34123)
 
 score_fold = np.zeros(k)
 
@@ -191,17 +198,16 @@ for train_index, test_index in skf.split(train_data, train_target):
 
     model = load_model("model_clean.h5")
 
-    opt = keras.optimizers.RMSprop(lr=0.05, rho=0.9, epsilon=1e-08, decay= 3.0 / 150.0 )
+    #opt = keras.optimizers.RMSprop(lr=0.002, rho=0.9, epsilon=1e-08, decay= 3.0 / 150.0 )
+    #opt = optimizers.SGD(lr=0.01, decay=0.995, momentum=0.9)
+    opt = keras.optimizers.Adam(lr=lr)
 
     model.compile(loss='binary_crossentropy', optimizer=opt)
 
     chck = ModelCheckpoint('keras_final_dae.h5', monitor='roc_auc_val', save_best_only=True, mode='max')
 
-    reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min_lr=0.0001)
-
     cb = [  RocAucMetricCallback(),  
-            reduce_lr,
-            EarlyStopping(monitor='val_loss',patience=20, verbose=2, min_delta=0),
+            EarlyStopping(monitor='val_loss',patience=150, verbose=2, min_delta=0),
             chck
          ]
 

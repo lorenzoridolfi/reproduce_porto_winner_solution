@@ -8,4 +8,6 @@ The processing workflow is simple. First I prepare the dataset in the file prepa
 
 I followed the instructions from the original post and to obtain the DAE I only changed the optimizer from SGD to RMSprop to get a quicker convergence.
 
-I'm now running the current commit to test the accuracy, as the previous didn't worked well. In the latest commit I changed the noise generation to occur before the OHE, as the adding noise to sparse OHE columns didn't work.
+UPDATE:
+
+Doing some manual parameter adjustment I got a partial gini score of 0.29 in a CV. Now I'm running a hyperopt parameter search to adjust lr, l2 reg and dropout. As the winner used C++ and a different NN library, I believe it's normal to have to adjust the parameters. 
