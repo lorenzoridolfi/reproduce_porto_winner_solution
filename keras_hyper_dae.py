@@ -166,7 +166,7 @@ def score(params):
 
     model = Sequential()
     model.add(Dense(units=4500, input_dim = train_data.shape[1], kernel_initializer=glorot_normal(), kernel_regularizer=regularizers.l2(params['l2'])))
-    model.add(Activation('relu'))
+    model.add(Activation(params['activation']))
     model.add(Dropout(params['dropout1']))
     model.add(BatchNormalization())
 
@@ -291,7 +291,8 @@ def optimize(random_state=99):
 
     space = {
             #'lr' : hp.loguniform('lr', np.log(0.05), np.log(0.0005)),
-                 
+                
+            'activation' : hp.choice('activation', 'linear', 'relu'),
             'dropout1': hp.uniform('dropout1', 0., 0.3),
             'dropout2': hp.uniform('dropout2', 0., 0.5),
 
