@@ -16,13 +16,14 @@ from keras.callbacks import CSVLogger
 from keras.models import load_model
 from keras.initializers import glorot_normal, Zeros, Ones
 import keras.backend as K
+from sklearn import metrics
 from numba import jit
 # from keras.optimizers import RMSprop
 import operator
 from sklearn.metrics import roc_auc_score
 import tensorflow as tf
 import tensorflow as tf
-
+import gc
 
 train_data = np.load('train_data_dae.npy')
 
@@ -185,7 +186,7 @@ for train_index, test_index in skf.split(train_data, train_target):
 
     cb = [  RocAucMetricCallback(),  
             reduce_lr,
-            EarlyStopping(monitor='val_loss',patience=20, verbose=2, min_delta=0),
+            EarlyStopping(monitor='val_loss',patience=50, verbose=2, min_delta=0),
             chck
          ]
 

@@ -19,6 +19,7 @@ import keras.backend as K
 from numba import jit
 # from keras.optimizers import RMSprop
 import operator
+from sklearn import metrics
 from sklearn.metrics import roc_auc_score
 import pickle
 from hyperopt.pyll.base import scope 
