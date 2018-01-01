@@ -19,37 +19,9 @@ from keras.optimizers import RMSprop
 import operator
 from sklearn.metrics import roc_auc_score
 import pickle
-from hyperopt.pyll.base import scope 
 import tensorflow as tf
 
-
-
 filename = "keras_dae.txt"
-
-def upsample_index(target, times):
-    n = target.shape[0]
-    train_index = np.array(list(range(n)))
-    positive_index = train_index[target == 1]
-    upsampled_index = train_index.tolist() + positive_index.tolist() * times
-    np.random.shuffle(upsampled_index)
-    return np.array(upsampled_index)
-
-def upsample_data(train, target, times):
-    upsampled_index = upsample_index(target, times)
-    return train[upsampled_index], target[upsampled_index]
-
-
-def inputSwapNoise(arr, p):
-    ### Takes a numpy array and swaps a row of each 
-    ### feature with another value from the same column with probability p
-    n, m = arr.shape
-    idx = list(range(n))
-    swap_n = round(n*p)
-    for i in range(m):
-        col_vals = np.random.permutation(arr[:, i])
-        swap_idx = np.random.choice(idx, size= swap_n)
-        arr[swap_idx, i] = np.random.choice(col_vals, size = swap_n)
-    return arr
 
 print('Reading data')
 
@@ -92,7 +64,7 @@ model.add(Activation('linear'))
 
 epochs = 1000
 
-opt = keras.optimizers.Nadam(lr=0.002)
+opt = keras.optimizers.Adam(lr=0.001)
 
 model.compile(loss='mse', optimizer=opt)
 
