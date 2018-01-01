@@ -15,4 +15,4 @@ ASSUMPTION MADE:
 
 UPDATE:
 
-Doing some manual parameter adjustment I got a partial gini score of 0.29 in a CV. Now I'm running a hyperopt parameter search to adjust lr, l2 reg and dropout. As the winner used C++ and a different NN library, I believe it's normal to have to adjust the parameters. 
+Doing some manual parameter adjustment I got a partial gini score of 0.29 in a CV. Now I'm running a hyperopt parameter search, using keras_hyper_dae.py, to discover the best values for lr, l2 reg and dropout. As the winner used C++ and a different NN library, I believe it's normal to have to adjust the parameters. 
