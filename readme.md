@@ -17,4 +17,7 @@ UPDATE:
 
 - In the first run, to generate the DAE, I used RMSprop and used early-stopping with a patience of 20 iterations over improvements on loss. It stopped around 300 iterations. To be sure, I'm running the DAE again, now with Adam and a patience of 100 iterations. After a few iterations, it's clear that will be an improvement.
 
-- Doing some manual parameter adjustments, I got a partial gini score of 0.29 in a CV, but the final average was near 0.27 with the old DAE. After the DAE update, I'll run a hyperopt parameter search, using keras_hyper_dae.py, to discover the best values for lr, l2 reg and dropout to be used in keras_final_dae.py, currently with the wrong parameters, to produce the final result. As the winner used C++ and a different NN library, I believe it's normal to have to adjust the parameters. 
+- To fine tune the LR of the network training the DAE, I made the program "keras_refine_dae.py" to play with different learning rates. As Keras was already automatically saving the network with better performance (lower loss), the learning process could be interrupted anytime to resume with a different learning rate. At the end, I was adjusting the learning rate manually, going as low as 0.00000001.
+
+- The new DAE is already generated. I got a mse error of 0.0085972559289 in the NN. Now I'm performing the hyper-parameter search for the second NN.
+
