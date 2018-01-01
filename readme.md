@@ -8,7 +8,7 @@ The processing workflow is simple. First I prepare the dataset in the file prepa
 
 I followed the instructions from the original post and to obtain the DAE I only changed the optimizer from SGD to Adam to get a quicker convergence.
 
-ASSUMPTION MADE:
+ASSUMPTIONS MADE:
 
 - I'm adding noise before the OHE. I believe shuffling the sparse OHE columns has a very low effect in adding noise.
 - I'm considering a column to be a binary column if the column has 3 or less different elements, as the column may have missing values. Only non-binary columns are normalized by rank-gauss.
