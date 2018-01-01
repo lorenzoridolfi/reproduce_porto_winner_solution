@@ -1,6 +1,6 @@
 Hi, I'm trying to reproduce the approach #2 from the Kaggle Porto Seguro winning solution described at https://www.kaggle.com/c/porto-seguro-safe-driver-prediction/discussion/44629
 
-Today I'm still not getting the results from the winner and I'm sharing the code to get some help from the community. This project is an ongoing development and I'm constantly publishing the progresses made. I'd kindly ask any help on reviewing the code to find any bug or better approach to the solution.
+Today I'm still not getting the results from the winner and I'm sharing the code to get some help from the community. This project is an ongoing development and I'm constantly publishing the progresses made. I'd kindly ask any help on reviewing the code to find any bug or better approaches to the solution.
 
 The processing workflow is simple. First I prepare the dataset in the file prepare_data.py. After that, I prepare the noise dataset using prepare_data_noise.py. The next step is to process the DAE, done in the file keras_dae.py. Finally, I will generate the final result in the keras_final_dae.py. This last program is not tuned yet and is not returning the results obtained by the winner of the solution.
 
