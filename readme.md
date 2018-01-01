@@ -4,7 +4,7 @@ Today I'm still not getting the results from the winner and I'm sharing the code
 
 The processing workflow is simple. First I prepare the dataset in the file prepare_data.py. After that, I prepare the noise dataset using prepare_data_noise.py. The next step is to process the DAE, done in the file keras_dae.py. Finally, I will generate the final result in the keras_final_dae.py. This last program is not tuned yet and is not returning the results obtained by the winner of the competition.
 
-I followed the instructions from the original post and, to obtain the DAE, I only changed the optimizer from SGD to RMSprop to get a quicker convergence. In the final NN, as the results are not ok yet, I'm working on the hyperparameter tuning now.
+I followed the instructions from the original post and, to obtain the DAE, I only changed the optimizer from SGD to Adam to get a quicker convergence. In the final NN, as the results are not ok yet, I'm working on the hyperparameter tuning now.
 
 ASSUMPTIONS MADE:
 
@@ -15,4 +15,6 @@ This project has many contributions gattered from the Porto Seguro discussion bo
 
 UPDATE:
 
-Doing some manual parameter adjustment I got a partial gini score of 0.29 in a CV, but the final average was near 0.27. Now I'm running a hyperopt parameter search, using keras_hyper_dae.py, to discover the best values for lr, l2 reg and dropout to be used in keras_final_dae.py, currently with the wrong parameters, to produce the final result. As the winner used C++ and a different NN library, I believe it's normal to have to adjust the parameters. 
+- In the first run, to generate the DAE, I used RMSprop and used early-stopping with a patience of 20 iterations over improvements on loss. It stopped around 300 iterations. To be sure, I'm running the DAE again, now with Adam and a patience of 100 iterations. 
+
+- Doing some manual parameter adjustment I got a partial gini score of 0.29 in a CV, but the final average was near 0.27. Now I'm running a hyperopt parameter search, using keras_hyper_dae.py, to discover the best values for lr, l2 reg and dropout to be used in keras_final_dae.py, currently with the wrong parameters, to produce the final result. As the winner used C++ and a different NN library, I believe it's normal to have to adjust the parameters. 

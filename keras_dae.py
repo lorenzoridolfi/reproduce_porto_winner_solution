@@ -92,7 +92,7 @@ model.add(Activation('linear'))
 
 epochs = 1000
 
-opt = keras.optimizers.RMSprop(lr=0.02, rho=0.9, epsilon=1e-08, decay= 4 / epochs)
+opt = keras.optimizers.Nadam(lr=0.002)
 
 model.compile(loss='mse', optimizer=opt)
 
@@ -100,7 +100,7 @@ print('Training neural net')
 
 chck = ModelCheckpoint('keras_dae.h5', monitor='loss', save_best_only=True)
 
-cb = [ EarlyStopping(monitor='loss',patience=20, verbose=2, min_delta=0), chck ]
+cb = [ EarlyStopping(monitor='loss', patience=100, verbose=2, min_delta=0), chck ]
             
 model.fit(all_data_noise, all_data, batch_size=128, verbose=1, epochs=epochs, callbacks=cb)
 
