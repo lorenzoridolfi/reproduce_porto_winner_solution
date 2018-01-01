@@ -4,7 +4,7 @@ Today I'm still not getting the results from the winner and I'm sharing the code
 
 The processing workflow is simple. First I prepare the dataset in the file prepare_data.py. After that, I prepare the noise dataset using prepare_data_noise.py. The next step is to process the DAE, done in the file keras_dae.py. Finally, I will generate the final result in the keras_final_dae.py. This last program is not tuned yet and is not returning the results obtained by the winner of the competition.
 
-I followed the instructions from the original post and, to obtain the DAE, I only changed the optimizer from SGD to Adam to get a quicker convergence. In the final NN, as the results are not ok yet, I'm working on the hyperparameter tuning now.
+I followed the instructions from the original post and, to obtain the DAE, I only changed the optimizer from SGD to Adam to get a quicker convergence. For the final NN, as the results are not ok yet, I'll work on the hyperparameter tuning to improve the score.
 
 ASSUMPTIONS MADE:
 
