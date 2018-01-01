@@ -15,6 +15,6 @@ This project has many contributions gattered from the Porto Seguro discussion bo
 
 UPDATE:
 
-- In the first run, to generate the DAE, I used RMSprop and used early-stopping with a patience of 20 iterations over improvements on loss. It stopped around 300 iterations. To be sure, I'm running the DAE again, now with Adam and a patience of 100 iterations. With only 4 iterations using Adam, I'm with a lower loss than after 300 iterations on RMSprop.
+- In the first run, to generate the DAE, I used RMSprop and used early-stopping with a patience of 20 iterations over improvements on loss. It stopped around 300 iterations. To be sure, I'm running the DAE again, now with Adam and a patience of 100 iterations. 
 
 - Doing some manual parameter adjustment I got a partial gini score of 0.29 in a CV, but the final average was near 0.27 with the old DAE. After the DAE update, I'll run a hyperopt parameter search, using keras_hyper_dae.py, to discover the best values for lr, l2 reg and dropout to be used in keras_final_dae.py, currently with the wrong parameters, to produce the final result. As the winner used C++ and a different NN library, I believe it's normal to have to adjust the parameters. 
