@@ -4,7 +4,7 @@ Today I'm still not getting the results from the winner and I'm sharing the code
 
 The processing workflow is simple. First I prepare the dataset in the file prepare_data.py. After that, I prepare the noise dataset using prepare_data_noise.py. The next step is to process the DAE, done in the file keras_dae.py. Finally, I will generate the final result in the keras_final_dae.py. This last program is not tuned yet and is not returning the results obtained by the winner of the competition.
 
-I followed the instructions from the original post and, to obtain the DAE, I only changed the optimizer from SGD to Adam to get a quicker convergence. For the final NN, as the results are not ok yet, I'll work on the hyperparameter tuning to improve the score.
+I followed the instructions from the original post and, to obtain the DAE, I only changed the optimizer from SGD to Adam to get a quicker convergence. For the final NN, as the results are not ok yet, I'm working on the hyperparameter tuning to improve the score.
 
 ASSUMPTIONS MADE:
 
@@ -19,7 +19,7 @@ UPDATE:
 
 - To fine tune the LR of the network training the DAE, I made the program "keras_refine_dae.py" to play with different learning rates. As Keras was already automatically saving the network with better performance (lower loss), the learning process could be interrupted anytime to resume with a different learning rate. At the end, I was adjusting the learning rate manually, going as low as 0.00000001.
 
-- The new DAE is already generated. I got an mse error of 0.0085972559289 in the NN. I believe it's a very low mse error, that's consistent with a mapping from data with some error to the original data. This low error gives me a little bit of confidence that the DAE mapping is ok. 
+- The new DAE is already generated. I got an mse error of 0.0085972559289 in the NN. I believe it's a very low mse error, that's consistent with a mapping from data with some noise to the original data. This low error gives me a little bit of confidence that the DAE mapping probably is ok. 
 
 - Now I'm performing the hyper-parameter search for the second NN. I'm tuning LR, dropout rates, batch size, L2 regulation and the activation function for the first layer. That's the part I'm not so confident, as the results are pretty different and with lower scores. One of the biggest contributors, IMHO, for the difference between my results and the winner's is the L2 regulation. The winner solution uses 0.05, which is a pretty high amount for Keras. I hope hyperopt will find a good combination of parameters, but the results so far are not so brilliant.
 
