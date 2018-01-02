@@ -221,7 +221,7 @@ def score(params):
 
         cb = [  RocAucMetricCallback(),  
 #                reduce_lr,
-                EarlyStopping(monitor='roc_auc_val',patience=10, verbose=2, min_delta=0, mode='max'),
+                EarlyStopping(monitor='roc_auc_val',patience=20, verbose=2, min_delta=0, mode='max'),
                 chck
              ]
 

@@ -139,7 +139,7 @@ class RocAucMetricCallback(keras.callbacks.Callback):
 
 #, kernel_regularizer=regularizers.l2(l2reg)
 
-l2reg = 5.0e-6
+l2reg = 0.05 #1.0e-7
 lr = 0.002
 
 model = Sequential()
@@ -207,11 +207,11 @@ for train_index, test_index in skf.split(train_data, train_target):
     chck = ModelCheckpoint('keras_final_dae.h5', monitor='roc_auc_val', save_best_only=True, mode='max')
 
     cb = [  RocAucMetricCallback(),  
-            EarlyStopping(monitor='val_loss',patience=150, verbose=2, min_delta=0),
+            #EarlyStopping(monitor='val_loss',patience=20, verbose=2, min_delta=0),
             chck
          ]
 
-    model.fit(x1,y1, batch_size=1280, validation_data=(x2, y2), verbose=1, epochs=150, callbacks=cb)
+    model.fit(x1,y1, batch_size=128, validation_data=(x2, y2), verbose=1, epochs=150, callbacks=cb)
                      
     model = load_model('keras_final_dae.h5')
 
